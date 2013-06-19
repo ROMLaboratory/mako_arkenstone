@@ -104,4 +104,7 @@ config MSM_KGSL_SIMPLE_GOV
 	---help---
 	  A simple KGSL GPU govenor for Qualcom Adreno XXX devices
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> c40d401... KGSL: Add a simple GPU governor for Adreno xxx GPU series
