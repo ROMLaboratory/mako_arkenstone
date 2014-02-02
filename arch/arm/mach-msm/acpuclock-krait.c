@@ -46,8 +46,7 @@
 
 #define SECCLKAGD		BIT(4)
 
-<<<<<<< HEAD
-=======
+
 #ifdef CONFIG_OC_ULTIMATE
 #ifdef CONFIG_LOW_CPUCLOCKS
 #define FREQ_TABLE_SIZE		41
@@ -62,7 +61,6 @@
 #endif
 #endif
 
->>>>>>> b1e9076... Low CPU Clocks: Allow ultra low CPU frequencies for better battery performance
 static DEFINE_MUTEX(driver_lock);
 static DEFINE_SPINLOCK(l2_lock);
 
