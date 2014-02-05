@@ -132,6 +132,14 @@ static struct msm_bus_scale_pdata bus_scale_data __initdata = {
 };
 
 
+#ifdef CONFIG_LOW_CPUCLOCKS
+#define L2_BW_MID 6
+#define L2_BW_HIGH 15
+#else
+#define L2_BW_MID 5
+#define L2_BW_HIGH 14
+#endif
+
 static struct l2_level l2_freq_tbl[] __initdata = {
 #ifdef CONFIG_LOW_CPUCLOCKS
 	[0]  = { {  378000, HFPLL, 2, 0x1C },  950000, 1050000, 1 },
@@ -174,11 +182,11 @@ static struct acpu_level tbl_slow[] __initdata = {
 #ifdef CONFIG_LOW_CPUCLOCKS
 	{ 1, {   162000, HFPLL, 2, 0x0C }, L2(0),   875000 },
 	{ 1, {   270000, HFPLL, 2, 0x14 }, L2(0),   900000 },
-	//{ 1, {   378000, HFPLL, 2, 0x1C }, L2(0),   950000 },
 	{ 1, {   384000, PLL_8, 0, 0x00 }, L2(1),   925000 },
 #else
 	{ 1, {   384000, PLL_8, 0, 0x00 }, L2(0),   950000 },
 #endif
+<<<<<<< HEAD
 	{ 0, {   432000, HFPLL, 2, 0x20 }, L2(5),   975000 },
 	{ 1, {   486000, HFPLL, 2, 0x24 }, L2(5),   975000 },
 	{ 1, {   594000, HFPLL, 1, 0x16 }, L2(5),  1000000 },
@@ -195,6 +203,29 @@ static struct acpu_level tbl_slow[] __initdata = {
 	{ 0, {  1404000, HFPLL, 1, 0x34 }, L2(14), 1237500 },
 	{ 1, {  1458000, HFPLL, 1, 0x36 }, L2(14), 1237500 },
 	{ 1, {  1512000, HFPLL, 1, 0x38 }, L2(14), 1250000 },
+=======
+	{ 0, {   432000, HFPLL, 2, 0x20 }, L2(L2_BW_MID),   975000 },
+	{ 1, {   486000, HFPLL, 2, 0x24 }, L2(L2_BW_MID),   975000 },
+	{ 0, {   540000, HFPLL, 2, 0x28 }, L2(L2_BW_MID),  1000000 },
+	{ 1, {   594000, HFPLL, 1, 0x16 }, L2(L2_BW_MID),  1000000 },
+	{ 0, {   648000, HFPLL, 1, 0x18 }, L2(L2_BW_MID),  1025000 },
+	{ 1, {   702000, HFPLL, 1, 0x1A }, L2(L2_BW_HIGH), 1025000 },
+	{ 0, {   756000, HFPLL, 1, 0x1C }, L2(L2_BW_HIGH), 1075000 },
+	{ 1, {   810000, HFPLL, 1, 0x1E }, L2(L2_BW_HIGH), 1075000 },
+	{ 0, {   864000, HFPLL, 1, 0x20 }, L2(L2_BW_HIGH), 1100000 },
+	{ 1, {   918000, HFPLL, 1, 0x22 }, L2(L2_BW_HIGH), 1100000 },
+	{ 0, {   972000, HFPLL, 1, 0x24 }, L2(L2_BW_HIGH), 1125000 },
+	{ 1, {  1026000, HFPLL, 1, 0x26 }, L2(L2_BW_HIGH), 1125000 },
+	{ 0, {  1080000, HFPLL, 1, 0x28 }, L2(L2_BW_HIGH), 1175000 },
+	{ 1, {  1134000, HFPLL, 1, 0x2A }, L2(L2_BW_HIGH), 1175000 },
+	{ 0, {  1188000, HFPLL, 1, 0x2C }, L2(L2_BW_HIGH), 1200000 },
+	{ 1, {  1242000, HFPLL, 1, 0x2E }, L2(L2_BW_HIGH), 1200000 },
+	{ 0, {  1296000, HFPLL, 1, 0x30 }, L2(L2_BW_HIGH), 1225000 },
+	{ 1, {  1350000, HFPLL, 1, 0x32 }, L2(L2_BW_HIGH), 1225000 },
+	{ 0, {  1404000, HFPLL, 1, 0x34 }, L2(L2_BW_HIGH), 1237500 },
+	{ 1, {  1458000, HFPLL, 1, 0x36 }, L2(L2_BW_HIGH), 1237500 },
+	{ 1, {  1512000, HFPLL, 1, 0x38 }, L2(L2_BW_HIGH), 1250000 },
+>>>>>>> fe6a32b... msm: acpuclock-8064: use higher bus speed at lower CPU freqs
 #ifdef CONFIG_CPU_OVERCLOCK
 	{ 1, {  1620000, HFPLL, 1, 0x3C }, L2(15), 1300000 },
 	{ 1, {  1728000, HFPLL, 1, 0x40 }, L2(15), 1350000 },
@@ -209,11 +240,11 @@ static struct acpu_level tbl_nom[] __initdata = {
 #ifdef CONFIG_LOW_CPUCLOCKS
 	{ 1, {   162000, HFPLL, 2, 0x0C }, L2(0),   825000 },
 	{ 1, {   270000, HFPLL, 2, 0x14 }, L2(0),   850000 },
-	//{ 1, {   378000, HFPLL, 2, 0x1C }, L2(0),   900000 },
 	{ 1, {   384000, PLL_8, 0, 0x00 }, L2(1),   875000 },
 #else
 	{ 1, {   384000, PLL_8, 0, 0x00 }, L2(0),   900000 },
 #endif
+<<<<<<< HEAD
 	{ 0, {   432000, HFPLL, 2, 0x20 }, L2(5),   925000 },
 	{ 1, {   486000, HFPLL, 2, 0x24 }, L2(5),   925000 },
 	{ 1, {   594000, HFPLL, 1, 0x16 }, L2(5),   950000 },
@@ -230,6 +261,29 @@ static struct acpu_level tbl_nom[] __initdata = {
 	{ 0, {  1404000, HFPLL, 1, 0x34 }, L2(14), 1187500 },
 	{ 1, {  1458000, HFPLL, 1, 0x36 }, L2(14), 1187500 },
 	{ 1, {  1512000, HFPLL, 1, 0x38 }, L2(14), 1200000 },
+=======
+	{ 0, {   432000, HFPLL, 2, 0x20 }, L2(L2_BW_MID),   925000 },
+	{ 1, {   486000, HFPLL, 2, 0x24 }, L2(L2_BW_MID),   925000 },
+	{ 0, {   540000, HFPLL, 2, 0x28 }, L2(L2_BW_MID),   950000 },
+	{ 1, {   594000, HFPLL, 1, 0x16 }, L2(L2_BW_MID),   950000 },
+	{ 0, {   648000, HFPLL, 1, 0x18 }, L2(L2_BW_MID),   975000 },
+	{ 1, {   702000, HFPLL, 1, 0x1A }, L2(L2_BW_HIGH),  975000 },
+	{ 0, {   756000, HFPLL, 1, 0x1C }, L2(L2_BW_HIGH), 1025000 },
+	{ 1, {   810000, HFPLL, 1, 0x1E }, L2(L2_BW_HIGH), 1025000 },
+	{ 0, {   864000, HFPLL, 1, 0x20 }, L2(L2_BW_HIGH), 1050000 },
+	{ 1, {   918000, HFPLL, 1, 0x22 }, L2(L2_BW_HIGH), 1050000 },
+	{ 0, {   972000, HFPLL, 1, 0x24 }, L2(L2_BW_HIGH), 1075000 },
+	{ 1, {  1026000, HFPLL, 1, 0x26 }, L2(L2_BW_HIGH), 1075000 },
+	{ 0, {  1080000, HFPLL, 1, 0x28 }, L2(L2_BW_HIGH), 1125000 },
+	{ 1, {  1134000, HFPLL, 1, 0x2A }, L2(L2_BW_HIGH), 1125000 },
+	{ 0, {  1188000, HFPLL, 1, 0x2C }, L2(L2_BW_HIGH), 1150000 },
+	{ 1, {  1242000, HFPLL, 1, 0x2E }, L2(L2_BW_HIGH), 1150000 },
+	{ 0, {  1296000, HFPLL, 1, 0x30 }, L2(L2_BW_HIGH), 1175000 },
+	{ 1, {  1350000, HFPLL, 1, 0x32 }, L2(L2_BW_HIGH), 1175000 },
+	{ 0, {  1404000, HFPLL, 1, 0x34 }, L2(L2_BW_HIGH), 1187500 },
+	{ 1, {  1458000, HFPLL, 1, 0x36 }, L2(L2_BW_HIGH), 1187500 },
+	{ 1, {  1512000, HFPLL, 1, 0x38 }, L2(L2_BW_HIGH), 1200000 },
+>>>>>>> fe6a32b... msm: acpuclock-8064: use higher bus speed at lower CPU freqs
 #ifdef CONFIG_CPU_OVERCLOCK
 	{ 1, {  1620000, HFPLL, 1, 0x3C }, L2(15), 1250000 },
 	{ 1, {  1728000, HFPLL, 1, 0x40 }, L2(15), 1300000 },
@@ -244,11 +298,11 @@ static struct acpu_level tbl_fast[] __initdata = {
 #ifdef CONFIG_LOW_CPUCLOCKS
 	{ 1, {   162000, HFPLL, 2, 0x0C }, L2(0),   775000 },
 	{ 1, {   270000, HFPLL, 2, 0x14 }, L2(0),   800000 },
-	//{ 1, {   378000, HFPLL, 2, 0x1C }, L2(0),   850000 },
 	{ 1, {   384000, PLL_8, 0, 0x00 }, L2(1),   825000 },
 #else
 	{ 1, {   384000, PLL_8, 0, 0x00 }, L2(0),   850000 },
 #endif
+<<<<<<< HEAD
 	{ 0, {   432000, HFPLL, 2, 0x20 }, L2(5),   875000 },
 	{ 1, {   486000, HFPLL, 2, 0x24 }, L2(5),   875000 },
 	{ 1, {   594000, HFPLL, 1, 0x16 }, L2(5),   900000 },
@@ -265,6 +319,29 @@ static struct acpu_level tbl_fast[] __initdata = {
 	{ 0, {  1404000, HFPLL, 1, 0x34 }, L2(14), 1137500 },
 	{ 1, {  1458000, HFPLL, 1, 0x36 }, L2(14), 1137500 },
 	{ 1, {  1512000, HFPLL, 1, 0x38 }, L2(14), 1150000 },
+=======
+	{ 0, {   432000, HFPLL, 2, 0x20 }, L2(L2_BW_MID),   875000 },
+	{ 1, {   486000, HFPLL, 2, 0x24 }, L2(L2_BW_MID),   875000 },
+	{ 0, {   540000, HFPLL, 2, 0x28 }, L2(L2_BW_MID),   900000 },
+	{ 1, {   594000, HFPLL, 1, 0x16 }, L2(L2_BW_MID),   900000 },
+	{ 0, {   648000, HFPLL, 1, 0x18 }, L2(L2_BW_MID),   925000 },
+	{ 1, {   702000, HFPLL, 1, 0x1A }, L2(L2_BW_HIGH),  925000 },
+	{ 0, {   756000, HFPLL, 1, 0x1C }, L2(L2_BW_HIGH),  975000 },
+	{ 1, {   810000, HFPLL, 1, 0x1E }, L2(L2_BW_HIGH),  975000 },
+	{ 0, {   864000, HFPLL, 1, 0x20 }, L2(L2_BW_HIGH), 1000000 },
+	{ 1, {   918000, HFPLL, 1, 0x22 }, L2(L2_BW_HIGH), 1000000 },
+	{ 0, {   972000, HFPLL, 1, 0x24 }, L2(L2_BW_HIGH), 1025000 },
+	{ 1, {  1026000, HFPLL, 1, 0x26 }, L2(L2_BW_HIGH), 1025000 },
+	{ 0, {  1080000, HFPLL, 1, 0x28 }, L2(L2_BW_HIGH), 1075000 },
+	{ 1, {  1134000, HFPLL, 1, 0x2A }, L2(L2_BW_HIGH), 1075000 },
+	{ 0, {  1188000, HFPLL, 1, 0x2C }, L2(L2_BW_HIGH), 1100000 },
+	{ 1, {  1242000, HFPLL, 1, 0x2E }, L2(L2_BW_HIGH), 1100000 },
+	{ 0, {  1296000, HFPLL, 1, 0x30 }, L2(L2_BW_HIGH), 1125000 },
+	{ 1, {  1350000, HFPLL, 1, 0x32 }, L2(L2_BW_HIGH), 1125000 },
+	{ 0, {  1404000, HFPLL, 1, 0x34 }, L2(L2_BW_HIGH), 1137500 },
+	{ 1, {  1458000, HFPLL, 1, 0x36 }, L2(L2_BW_HIGH), 1137500 },
+	{ 1, {  1512000, HFPLL, 1, 0x38 }, L2(L2_BW_HIGH), 1150000 },
+>>>>>>> fe6a32b... msm: acpuclock-8064: use higher bus speed at lower CPU freqs
 #ifdef CONFIG_CPU_OVERCLOCK
 	{ 1, {  1620000, HFPLL, 1, 0x3C }, L2(15), 1200000 },
 	{ 1, {  1728000, HFPLL, 1, 0x40 }, L2(15), 1250000 },
@@ -279,11 +356,11 @@ static struct acpu_level tbl_faster[] __initdata = {
 #ifdef CONFIG_LOW_CPUCLOCKS
 	{ 1, {   162000, HFPLL, 2, 0x0C }, L2(0),   775000 },
 	{ 1, {   270000, HFPLL, 2, 0x14 }, L2(0),   800000 },
-	//{ 1, {   378000, HFPLL, 2, 0x1C }, L2(0),   850000 },
 	{ 1, {   384000, PLL_8, 0, 0x00 }, L2(1),   825000 },
 #else
 	{ 1, {   384000, PLL_8, 0, 0x00 }, L2(0),   850000 },
 #endif
+<<<<<<< HEAD
 	{ 0, {   432000, HFPLL, 2, 0x20 }, L2(5),   875000 },
 	{ 1, {   486000, HFPLL, 2, 0x24 }, L2(5),   875000 },
 	{ 1, {   594000, HFPLL, 1, 0x16 }, L2(5),   900000 },
@@ -296,6 +373,25 @@ static struct acpu_level tbl_faster[] __initdata = {
 	{ 0, {  1188000, HFPLL, 1, 0x2C }, L2(14), 1075000 },
 	{ 1, {  1242000, HFPLL, 1, 0x2E }, L2(14), 1075000 },
 	{ 0, {  1296000, HFPLL, 1, 0x30 }, L2(14), 1100000 },
+=======
+	{ 0, {   432000, HFPLL, 2, 0x20 }, L2(L2_BW_MID),   875000 },
+	{ 1, {   486000, HFPLL, 2, 0x24 }, L2(L2_BW_MID),   875000 },
+	{ 0, {   540000, HFPLL, 2, 0x28 }, L2(L2_BW_MID),   900000 },
+	{ 1, {   594000, HFPLL, 1, 0x16 }, L2(L2_BW_MID),   900000 },
+	{ 0, {   648000, HFPLL, 1, 0x18 }, L2(L2_BW_MID),   925000 },
+	{ 1, {   702000, HFPLL, 1, 0x1A }, L2(L2_BW_HIGH),  925000 },
+	{ 0, {   756000, HFPLL, 1, 0x1C }, L2(L2_BW_HIGH),  962500 },
+	{ 1, {   810000, HFPLL, 1, 0x1E }, L2(L2_BW_HIGH),  962500 },
+	{ 0, {   864000, HFPLL, 1, 0x20 }, L2(L2_BW_HIGH),  975000 },
+	{ 1, {   918000, HFPLL, 1, 0x22 }, L2(L2_BW_HIGH),  975000 },
+	{ 0, {   972000, HFPLL, 1, 0x24 }, L2(L2_BW_HIGH), 1000000 },
+	{ 1, {  1026000, HFPLL, 1, 0x26 }, L2(L2_BW_HIGH), 1000000 },
+	{ 0, {  1080000, HFPLL, 1, 0x28 }, L2(L2_BW_HIGH), 1050000 },
+	{ 1, {  1134000, HFPLL, 1, 0x2A }, L2(L2_BW_HIGH), 1050000 },
+	{ 0, {  1188000, HFPLL, 1, 0x2C }, L2(L2_BW_HIGH), 1075000 },
+	{ 1, {  1242000, HFPLL, 1, 0x2E }, L2(L2_BW_HIGH), 1075000 },
+	{ 0, {  1296000, HFPLL, 1, 0x30 }, L2(L2_BW_HIGH), 1100000 },
+>>>>>>> fe6a32b... msm: acpuclock-8064: use higher bus speed at lower CPU freqs
 	{ 1, {  1350000, HFPLL, 1, 0x32 }, L2(14), 1100000 },
 	{ 0, {  1404000, HFPLL, 1, 0x34 }, L2(14), 1112500 },
 	{ 1, {  1458000, HFPLL, 1, 0x36 }, L2(14), 1112500 },
