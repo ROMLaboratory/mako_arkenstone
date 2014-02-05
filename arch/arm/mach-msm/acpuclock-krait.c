@@ -44,7 +44,11 @@
 #define PRI_SRC_SEL_HFPLL	1
 #define PRI_SRC_SEL_HFPLL_DIV2	2
 
-#define SECCLKAGD		BIT(4)
+#ifdef CONFIG_LOW_CPUCLOCKS
+#define FREQ_TABLE_SIZE		40
+#else
+#define FREQ_TABLE_SIZE		35
+#endif
 
 static DEFINE_MUTEX(driver_lock);
 static DEFINE_SPINLOCK(l2_lock);
@@ -82,25 +86,15 @@ static void set_pri_clk_src(struct scalable *sc, u32 pri_src_sel)
 /* Select a source on the secondary MUX. */
 static void __cpuinit set_sec_clk_src(struct scalable *sc, u32 sec_src_sel)
 {
-	u32 regval;
+u32 regval;
 
-	/* 8064 Errata: disable sec_src clock gating during switch. */
-	regval = get_l2_indirect_reg(sc->l2cpmr_iaddr);
-	regval |= SECCLKAGD;
-	set_l2_indirect_reg(sc->l2cpmr_iaddr, regval);
-
-	/* Program the MUX */
-	regval &= ~(0x3 << 2);
-	regval |= ((sec_src_sel & 0x3) << 2);
-	set_l2_indirect_reg(sc->l2cpmr_iaddr, regval);
-
-	/* 8064 Errata: re-enabled sec_src clock gating. */
-	regval &= ~SECCLKAGD;
-	set_l2_indirect_reg(sc->l2cpmr_iaddr, regval);
-
-	/* Wait for switch to complete. */
-	mb();
-	udelay(1);
+regval = get_l2_indirect_reg(sc->l2cpmr_iaddr);
+regval &= ~(0x3 << 2);
+regval |= ((sec_src_sel & 0x3) << 2);
+set_l2_indirect_reg(sc->l2cpmr_iaddr, regval);
+/* Wait for switch to complete. */
+mb();
+udelay(1);
 }
 
 static int enable_rpm_vreg(struct vreg *vreg)
@@ -927,9 +921,9 @@ static void __init bus_init(const struct l2_level *l2_level)
 
 #ifdef CONFIG_USERSPACE_VOLTAGE_CONTROL
 
-#define USERCONTROL_MIN_VDD		 750
-#define USERCONTROL_MAX_VDD		1400
-#define NUM_FREQS			14
+#define USERCONTROL_MIN_VDD		 500
+#define USERCONTROL_MAX_VDD		1600
+#define NUM_FREQS			18
 
 ssize_t acpuclk_get_vdd_levels_str(char *buf) {
 
