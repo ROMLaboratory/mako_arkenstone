@@ -619,7 +619,7 @@ static ssize_t show_bios_limit(struct cpufreq_policy *policy, char *buf)
 	return sprintf(buf, "%u\n", policy->cpuinfo.max_freq);
 }
 
-#ifdef CONFIG_CPU_VOLTAGE_TABLE
+#ifdef CONFIG_USERSPACE_VOLTAGE_CONTROL
 
 extern ssize_t acpuclk_get_vdd_levels_str(char *buf);
 extern void acpuclk_set_vdd(unsigned acpu_khz, int vdd);
@@ -679,7 +679,7 @@ static ssize_t store_vdd_levels(struct kobject *a, struct attribute *b, const ch
 	return count;
 }
 
-#endif	/* CONFIG_CPU_VOLTAGE_TABLE */
+#endif
 
 cpufreq_freq_attr_ro_perm(cpuinfo_cur_freq, 0400);
 cpufreq_freq_attr_ro(cpuinfo_min_freq);
@@ -696,8 +696,7 @@ cpufreq_freq_attr_rw(scaling_min_freq);
 cpufreq_freq_attr_rw(scaling_max_freq);
 cpufreq_freq_attr_rw(scaling_governor);
 cpufreq_freq_attr_rw(scaling_setspeed);
-
-#ifdef CONFIG_CPU_VOLTAGE_TABLE
+#ifdef CONFIG_USERSPACE_VOLTAGE_CONTROL
 define_one_global_rw(vdd_levels);
 #endif
 
@@ -714,13 +713,10 @@ static struct attribute *default_attrs[] = {
 	&scaling_driver.attr,
 	&scaling_available_governors.attr,
 	&scaling_setspeed.attr,
-#ifdef CONFIG_USERSPACE_VOLTAGE_CONTROL
-	&UV_mV_table.attr,
-#endif
 	NULL
 };
 
-#ifdef CONFIG_CPU_VOLTAGE_TABLE
+#ifdef CONFIG_USERSPACE_VOLTAGE_CONTROL
 static struct attribute *vddtbl_attrs[] = {
 	&vdd_levels.attr,
 	NULL
@@ -730,7 +726,7 @@ static struct attribute_group vddtbl_attr_group = {
 	.attrs = vddtbl_attrs,
 	.name = "vdd_table",
 };
-#endif	/* CONFIG_CPU_VOLTAGE_TABLE */
+#endif
 
 struct kobject *cpufreq_global_kobject;
 EXPORT_SYMBOL(cpufreq_global_kobject);
@@ -1085,13 +1081,6 @@ static int cpufreq_add_dev(struct device *dev, struct subsys_interface *sif)
 		pr_debug("initialization failed\n");
 		goto err_unlock_policy;
 	}
-	
-	/*
-	* affected cpus must always be the one, which are online. We aren't
-	* managing offline cpus here.
-	*/
-	cpumask_and(policy->cpus, policy->cpus, cpu_online_mask);
-	
 	policy->user_policy.min = policy->min;
 	policy->user_policy.max = policy->max;
 
@@ -2075,9 +2064,9 @@ EXPORT_SYMBOL_GPL(cpufreq_unregister_driver);
 static int __init cpufreq_core_init(void)
 {
 	int cpu;
-#ifdef CONFIG_CPU_VOLTAGE_TABLE
+#ifdef CONFIG_USERSPACE_VOLTAGE_CONTROL
 	int rc;
-#endif	/* CONFIG_CPU_VOLTAGE_TABLE */
+#endif
 
 	if (cpufreq_disabled())
 		return -ENODEV;
@@ -2090,13 +2079,9 @@ static int __init cpufreq_core_init(void)
 	cpufreq_global_kobject = kobject_create_and_add("cpufreq", &cpu_subsys.dev_root->kobj);
 	BUG_ON(!cpufreq_global_kobject);
 	register_syscore_ops(&cpufreq_syscore_ops);
-<<<<<<< HEAD
-=======
-#ifdef CONFIG_CPU_VOLTAGE_TABLE
+#ifdef CONFIG_USERSPACE_VOLTAGE_CONTROL
 	rc = sysfs_create_group(cpufreq_global_kobject, &vddtbl_attr_group);
-#endif	/* CONFIG_CPU_VOLTAGE_TABLE */
-
->>>>>>> c6db228... Voltage Control: add sysfs interface
+#endif
 	return 0;
 }
 core_initcall(cpufreq_core_init);
