@@ -150,10 +150,7 @@ static struct kobject *cores_kobj;
 #define DCVS_MAX_NUM_FREQS 20
 #else
 #define DCVS_MAX_NUM_FREQS 15
-<<<<<<< HEAD
-=======
 #endif
->>>>>>> 55abe66... msm: acpuclock-8064: added low (162Mhz) and high (1944Mhz) cpu
 
 static struct msm_dcvs_freq_entry cpu_freq_tbl[DCVS_MAX_NUM_FREQS];
 static unsigned num_cpu_freqs;

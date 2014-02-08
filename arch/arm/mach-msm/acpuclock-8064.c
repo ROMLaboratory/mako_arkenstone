@@ -51,14 +51,9 @@ static struct scalable scalable[] __initdata = {
 		.vreg[VREG_CORE] = { "krait0", 1450000 },
 #else
 		.vreg[VREG_CORE] = { "krait0", 1300000 },
-<<<<<<< HEAD
-		.vreg[VREG_MEM]  = { "krait0_mem", 1100000 },
-		.vreg[VREG_DIG]  = { "krait0_dig", 1100000 },
-=======
 #endif
 		.vreg[VREG_MEM]  = { "krait0_mem", 1150000 },
 		.vreg[VREG_DIG]  = { "krait0_dig", 1150000 },
->>>>>>> 55abe66... msm: acpuclock-8064: added low (162Mhz) and high (1944Mhz) cpu
 		.vreg[VREG_HFPLL_A] = { "krait0_hfpll", 1800000 },
 	},
 	[CPU1] = {
@@ -71,14 +66,9 @@ static struct scalable scalable[] __initdata = {
 		.vreg[VREG_CORE] = { "krait1", 1450000 },
 #else
 		.vreg[VREG_CORE] = { "krait1", 1300000 },
-<<<<<<< HEAD
-		.vreg[VREG_MEM]  = { "krait1_mem", 1100000 },
-		.vreg[VREG_DIG]  = { "krait1_dig", 1100000 },
-=======
 #endif
 		.vreg[VREG_MEM]  = { "krait1_mem", 1150000 },
 		.vreg[VREG_DIG]  = { "krait1_dig", 1150000 },
->>>>>>> 55abe66... msm: acpuclock-8064: added low (162Mhz) and high (1944Mhz) cpu
 		.vreg[VREG_HFPLL_A] = { "krait1_hfpll", 1800000 },
 	},
 	[CPU2] = {
@@ -91,14 +81,9 @@ static struct scalable scalable[] __initdata = {
 		.vreg[VREG_CORE] = { "krait2", 1450000 },
 #else
 		.vreg[VREG_CORE] = { "krait2", 1300000 },
-<<<<<<< HEAD
-		.vreg[VREG_MEM]  = { "krait2_mem", 1100000 },
-		.vreg[VREG_DIG]  = { "krait2_dig", 1100000 },
-=======
 #endif
 		.vreg[VREG_MEM]  = { "krait2_mem", 1150000 },
 		.vreg[VREG_DIG]  = { "krait2_dig", 1150000 },
->>>>>>> 55abe66... msm: acpuclock-8064: added low (162Mhz) and high (1944Mhz) cpu
 		.vreg[VREG_HFPLL_A] = { "krait2_hfpll", 1800000 },
 	},
 	[CPU3] = {
@@ -111,14 +96,9 @@ static struct scalable scalable[] __initdata = {
 		.vreg[VREG_CORE] = { "krait3", 1450000 },
 #else
 		.vreg[VREG_CORE] = { "krait3", 1300000 },
-<<<<<<< HEAD
-		.vreg[VREG_MEM]  = { "krait3_mem", 1100000 },
-		.vreg[VREG_DIG]  = { "krait3_dig", 1100000 },
-=======
 #endif
 		.vreg[VREG_MEM]  = { "krait3_mem", 1150000 },
 		.vreg[VREG_DIG]  = { "krait3_dig", 1150000 },
->>>>>>> 55abe66... msm: acpuclock-8064: added low (162Mhz) and high (1944Mhz) cpu
 		.vreg[VREG_HFPLL_A] = { "krait3_hfpll", 1800000 },
 	},
 	[L2] = {
@@ -153,27 +133,6 @@ static struct msm_bus_scale_pdata bus_scale_data __initdata = {
 
 
 static struct l2_level l2_freq_tbl[] __initdata = {
-<<<<<<< HEAD
-	[0]  = { {  384000, PLL_8, 0, 0x00 },  950000, 1000000, 1 },
-	[1]  = { {  432000, HFPLL, 2, 0x20 }, 1000000, 1000000, 2 },
-	[2]  = { {  486000, HFPLL, 2, 0x24 }, 1000000, 1000000, 2 },
-	[3]  = { {  540000, HFPLL, 2, 0x28 }, 1000000, 1000000, 2 },
-	[4]  = { {  594000, HFPLL, 1, 0x16 }, 1000000, 1000000, 2 },
-	[5]  = { {  648000, HFPLL, 1, 0x18 }, 1000000, 1000000, 4 },
-	[6]  = { {  702000, HFPLL, 1, 0x1A }, 1100000, 1100000, 4 },
-	[7]  = { {  756000, HFPLL, 1, 0x1C }, 1100000, 1100000, 4 },
-	[8]  = { {  810000, HFPLL, 1, 0x1E }, 1100000, 1100000, 4 },
-	[9]  = { {  864000, HFPLL, 1, 0x20 }, 1100000, 1100000, 4 },
-	[10] = { {  918000, HFPLL, 1, 0x22 }, 1100000, 1100000, 5 },
-	[11] = { {  972000, HFPLL, 1, 0x24 }, 1100000, 1100000, 5 },
-	[12] = { { 1026000, HFPLL, 1, 0x26 }, 1100000, 1100000, 5 },
-	[13] = { { 1080000, HFPLL, 1, 0x28 }, 1100000, 1100000, 5 },
-	[14] = { { 1134000, HFPLL, 1, 0x2A }, 1100000, 1100000, 5 },
-	[15] = { { 1188000, HFPLL, 1, 0x2C }, 1100000, 1100000, 5 },
-	[16] = { { 1242000, HFPLL, 1, 0x2E }, 1100000, 1100000, 5 },
-	[17] = { { 1296000, HFPLL, 1, 0x30 }, 1100000, 1100000, 5 },
-	[18] = { { 1350000, HFPLL, 1, 0x32 }, 1100000, 1100000, 5 },
-=======
 #ifdef CONFIG_LOW_CPUCLOCKS
 	[0]  = { {  378000, HFPLL, 2, 0x1C },  950000, 1050000, 1 },
 	[1]  = { {  384000, PLL_8, 0, 0x00 },  950000, 1050000, 1 },
@@ -208,7 +167,6 @@ static struct l2_level l2_freq_tbl[] __initdata = {
 	[13] = { { 1080000, HFPLL, 1, 0x28 }, 1150000, 1150000, 5 },
 	[14] = { { 1134000, HFPLL, 1, 0x2A }, 1150000, 1150000, 5 },
 #endif
->>>>>>> 55abe66... msm: acpuclock-8064: added low (162Mhz) and high (1944Mhz) cpu
 	{ }
 };
 
@@ -220,29 +178,14 @@ static struct acpu_level tbl_slow[] __initdata = {
 	{ 1, {   384000, PLL_8, 0, 0x00 }, L2(1),   925000 },
 #else
 	{ 1, {   384000, PLL_8, 0, 0x00 }, L2(0),   950000 },
-<<<<<<< HEAD
-=======
 #endif
 	{ 0, {   432000, HFPLL, 2, 0x20 }, L2(5),   975000 },
->>>>>>> 55abe66... msm: acpuclock-8064: added low (162Mhz) and high (1944Mhz) cpu
 	{ 1, {   486000, HFPLL, 2, 0x24 }, L2(5),   975000 },
 	{ 1, {   594000, HFPLL, 1, 0x16 }, L2(5),  1000000 },
 	{ 1, {   702000, HFPLL, 1, 0x1A }, L2(5),  1025000 },
 	{ 1, {   810000, HFPLL, 1, 0x1E }, L2(5),  1075000 },
 	{ 1, {   918000, HFPLL, 1, 0x22 }, L2(5),  1100000 },
 	{ 1, {  1026000, HFPLL, 1, 0x26 }, L2(5),  1125000 },
-<<<<<<< HEAD
-	{ 1, {  1134000, HFPLL, 1, 0x2A }, L2(16), 1175000 },
-	{ 1, {  1242000, HFPLL, 1, 0x2E }, L2(16), 1200000 },
-	{ 1, {  1350000, HFPLL, 1, 0x32 }, L2(16), 1225000 },
-	{ 1, {  1458000, HFPLL, 1, 0x36 }, L2(16), 1237500 },
-	{ 1, {  1512000, HFPLL, 1, 0x38 }, L2(16), 1250000 },
-	{ 1, {  1620000, HFPLL, 1, 0x3C }, L2(16), 1275000 },
-	{ 1, {  1728000, HFPLL, 1, 0x40 }, L2(16), 1300000 },
-//	{ 1, {  1836000, HFPLL, 1, 0x44 }, L2(16), 1312500 },
-//	{ 1, {  1944000, HFPLL, 1, 0x48 }, L2(14), 1325000 },
-//	{ 1, {  2052000, HFPLL, 1, 0x4C }, L2(14), 1337500 },
-=======
 	{ 0, {  1080000, HFPLL, 1, 0x28 }, L2(14), 1175000 },
 	{ 1, {  1134000, HFPLL, 1, 0x2A }, L2(14), 1175000 },
 	{ 0, {  1188000, HFPLL, 1, 0x2C }, L2(14), 1200000 },
@@ -259,7 +202,6 @@ static struct acpu_level tbl_slow[] __initdata = {
 	{ 1, {  1890000, HFPLL, 1, 0x45 }, L2(15), 1425000 },
 	{ 1, {  1944000, HFPLL, 1, 0x46 }, L2(15), 1450000 },
 #endif
->>>>>>> 55abe66... msm: acpuclock-8064: added low (162Mhz) and high (1944Mhz) cpu
 	{ 0, { 0 } }
 };
 
@@ -271,29 +213,14 @@ static struct acpu_level tbl_nom[] __initdata = {
 	{ 1, {   384000, PLL_8, 0, 0x00 }, L2(1),   875000 },
 #else
 	{ 1, {   384000, PLL_8, 0, 0x00 }, L2(0),   900000 },
-<<<<<<< HEAD
-=======
 #endif
 	{ 0, {   432000, HFPLL, 2, 0x20 }, L2(5),   925000 },
->>>>>>> 55abe66... msm: acpuclock-8064: added low (162Mhz) and high (1944Mhz) cpu
 	{ 1, {   486000, HFPLL, 2, 0x24 }, L2(5),   925000 },
 	{ 1, {   594000, HFPLL, 1, 0x16 }, L2(5),   950000 },
 	{ 1, {   702000, HFPLL, 1, 0x1A }, L2(5),   975000 },
 	{ 1, {   810000, HFPLL, 1, 0x1E }, L2(5),  1025000 },
 	{ 1, {   918000, HFPLL, 1, 0x22 }, L2(5),  1050000 },
 	{ 1, {  1026000, HFPLL, 1, 0x26 }, L2(5),  1075000 },
-<<<<<<< HEAD
-	{ 1, {  1134000, HFPLL, 1, 0x2A }, L2(16), 1125000 },
-	{ 1, {  1242000, HFPLL, 1, 0x2E }, L2(16), 1150000 },
-	{ 1, {  1350000, HFPLL, 1, 0x32 }, L2(16), 1175000 },
-	{ 1, {  1458000, HFPLL, 1, 0x36 }, L2(16), 1187500 },
-	{ 1, {  1512000, HFPLL, 1, 0x38 }, L2(16), 1200000 },
-	{ 1, {  1620000, HFPLL, 1, 0x3C }, L2(16), 1225000 },
-	{ 1, {  1728000, HFPLL, 1, 0x40 }, L2(16), 1250000 },
-//	{ 1, {  1836000, HFPLL, 1, 0x44 }, L2(16), 1262500 },
-//	{ 1, {  1944000, HFPLL, 1, 0x48 }, L2(14), 1275000 },
-//	{ 1, {  2052000, HFPLL, 1, 0x4C }, L2(14), 1287500 },
-=======
 	{ 0, {  1080000, HFPLL, 1, 0x28 }, L2(14), 1125000 },
 	{ 1, {  1134000, HFPLL, 1, 0x2A }, L2(14), 1125000 },
 	{ 0, {  1188000, HFPLL, 1, 0x2C }, L2(14), 1150000 },
@@ -310,7 +237,6 @@ static struct acpu_level tbl_nom[] __initdata = {
 	{ 1, {  1890000, HFPLL, 1, 0x45 }, L2(15), 1375000 },
 	{ 1, {  1944000, HFPLL, 1, 0x46 }, L2(15), 1400000 },
 #endif
->>>>>>> 55abe66... msm: acpuclock-8064: added low (162Mhz) and high (1944Mhz) cpu
 	{ 0, { 0 } }
 };
 
@@ -322,29 +248,14 @@ static struct acpu_level tbl_fast[] __initdata = {
 	{ 1, {   384000, PLL_8, 0, 0x00 }, L2(1),   825000 },
 #else
 	{ 1, {   384000, PLL_8, 0, 0x00 }, L2(0),   850000 },
-<<<<<<< HEAD
-=======
 #endif
 	{ 0, {   432000, HFPLL, 2, 0x20 }, L2(5),   875000 },
->>>>>>> 55abe66... msm: acpuclock-8064: added low (162Mhz) and high (1944Mhz) cpu
 	{ 1, {   486000, HFPLL, 2, 0x24 }, L2(5),   875000 },
 	{ 1, {   594000, HFPLL, 1, 0x16 }, L2(5),   900000 },
 	{ 1, {   702000, HFPLL, 1, 0x1A }, L2(5),   925000 },
 	{ 1, {   810000, HFPLL, 1, 0x1E }, L2(5),   975000 },
 	{ 1, {   918000, HFPLL, 1, 0x22 }, L2(5),  1000000 },
 	{ 1, {  1026000, HFPLL, 1, 0x26 }, L2(5),  1025000 },
-<<<<<<< HEAD
-	{ 1, {  1134000, HFPLL, 1, 0x2A }, L2(16), 1075000 },
-	{ 1, {  1242000, HFPLL, 1, 0x2E }, L2(16), 1100000 },
-	{ 1, {  1350000, HFPLL, 1, 0x32 }, L2(16), 1125000 },
-	{ 1, {  1458000, HFPLL, 1, 0x36 }, L2(16), 1137500 },
-	{ 1, {  1512000, HFPLL, 1, 0x38 }, L2(16), 1150000 },
-	{ 1, {  1620000, HFPLL, 1, 0x3C }, L2(16), 1175000 },
-	{ 1, {  1728000, HFPLL, 1, 0x40 }, L2(16), 1200000 },
-//	{ 1, {  1836000, HFPLL, 1, 0x44 }, L2(16), 1212500 },
-//	{ 1, {  1944000, HFPLL, 1, 0x48 }, L2(14), 1225000 },
-//	{ 1, {  2052000, HFPLL, 1, 0x4C }, L2(14), 1237500 },
-=======
 	{ 0, {  1080000, HFPLL, 1, 0x28 }, L2(14), 1075000 },
 	{ 1, {  1134000, HFPLL, 1, 0x2A }, L2(14), 1075000 },
 	{ 0, {  1188000, HFPLL, 1, 0x2C }, L2(14), 1100000 },
@@ -361,7 +272,6 @@ static struct acpu_level tbl_fast[] __initdata = {
 	{ 1, {  1890000, HFPLL, 1, 0x45 }, L2(15), 1325000 },
 	{ 1, {  1944000, HFPLL, 1, 0x46 }, L2(15), 1350000 },
 #endif
->>>>>>> 55abe66... msm: acpuclock-8064: added low (162Mhz) and high (1944Mhz) cpu
 	{ 0, { 0 } }
 };
 
@@ -373,29 +283,14 @@ static struct acpu_level tbl_faster[] __initdata = {
 	{ 1, {   384000, PLL_8, 0, 0x00 }, L2(1),   825000 },
 #else
 	{ 1, {   384000, PLL_8, 0, 0x00 }, L2(0),   850000 },
-<<<<<<< HEAD
-=======
 #endif
 	{ 0, {   432000, HFPLL, 2, 0x20 }, L2(5),   875000 },
->>>>>>> 55abe66... msm: acpuclock-8064: added low (162Mhz) and high (1944Mhz) cpu
 	{ 1, {   486000, HFPLL, 2, 0x24 }, L2(5),   875000 },
 	{ 1, {   594000, HFPLL, 1, 0x16 }, L2(5),   900000 },
 	{ 1, {   702000, HFPLL, 1, 0x1A }, L2(5),   925000 },
 	{ 1, {   810000, HFPLL, 1, 0x1E }, L2(5),   962500 },
 	{ 1, {   918000, HFPLL, 1, 0x22 }, L2(5),   975000 },
 	{ 1, {  1026000, HFPLL, 1, 0x26 }, L2(5),  1000000 },
-<<<<<<< HEAD
-	{ 1, {  1134000, HFPLL, 1, 0x2A }, L2(16), 1050000 },
-	{ 1, {  1242000, HFPLL, 1, 0x2E }, L2(16), 1075000 },
-	{ 1, {  1350000, HFPLL, 1, 0x32 }, L2(16), 1100000 },
-	{ 1, {  1458000, HFPLL, 1, 0x36 }, L2(16), 1112500 },
-	{ 1, {  1512000, HFPLL, 1, 0x38 }, L2(16), 1125000 },
-	{ 1, {  1620000, HFPLL, 1, 0x3C }, L2(16), 1150000 },
-	{ 1, {  1728000, HFPLL, 1, 0x40 }, L2(16), 1175000 },
-//	{ 1, {  1836000, HFPLL, 1, 0x44 }, L2(16), 1187500 },
-//	{ 1, {  1944000, HFPLL, 1, 0x48 }, L2(14), 1200000 },
-//	{ 1, {  2052000, HFPLL, 1, 0x4C }, L2(14), 1212500 },
-=======
 	{ 0, {  1080000, HFPLL, 1, 0x28 }, L2(14), 1050000 },
 	{ 1, {  1134000, HFPLL, 1, 0x2A }, L2(14), 1050000 },
 	{ 0, {  1188000, HFPLL, 1, 0x2C }, L2(14), 1075000 },
@@ -412,7 +307,6 @@ static struct acpu_level tbl_faster[] __initdata = {
 	{ 1, {  1890000, HFPLL, 1, 0x45 }, L2(15), 1275000 },
 	{ 1, {  1944000, HFPLL, 1, 0x46 }, L2(15), 1300000 },
 #endif
->>>>>>> 55abe66... msm: acpuclock-8064: added low (162Mhz) and high (1944Mhz) cpu
 	{ 0, { 0 } }
 };
 
