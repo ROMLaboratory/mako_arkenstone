@@ -919,94 +919,92 @@ static void __init bus_init(const struct l2_level *l2_level)
 		dev_err(drv.dev, "initial bandwidth req failed (%d)\n", ret);
 }
 
-
 #ifdef CONFIG_CPU_FREQ_MSM
 static struct cpufreq_frequency_table freq_table[NR_CPUS][FREQ_TABLE_SIZE];
 
 #ifdef CONFIG_MSM_CPU_VOLTAGE_CONTROL
 
-#define USERCONTROL_MIN_VDD		 50000
-#define USERCONTROL_MAX_VDD		160000
-#define NUM_FREQS			18
+#define MAX_VDD 1450
+#define MIN_VDD 600
 
-ssize_t acpuclk_get_vdd_levels_str(char *buf) {
+ssize_t acpuclk_get_vdd_levels_str(char *buf)
+{
 
-	int i, len = 0;
+int i, len = 0;
 
-	if (buf) {
-		for (i = 0; drv.acpu_freq_tbl[i].speed.khz; i++) {
-			if (drv.acpu_freq_tbl[i].use_for_scaling) {
-				len += sprintf(buf + len, "%lumhz: %i mV\n", drv.acpu_freq_tbl[i].speed.khz/1000,
-						drv.acpu_freq_tbl[i].vdd_core/1000 );
-			}
-		}
-	}
-	return len;
+if (buf) {
+for (i = 0; drv.acpu_freq_tbl[i].speed.khz; i++) {
+            if (drv.acpu_freq_tbl[i].use_for_scaling) {
+                len += sprintf(buf + len, "%lumhz: %i mV\n",
+                           drv.acpu_freq_tbl[i].speed.khz/1000,
+                           drv.acpu_freq_tbl[i].vdd_core/1000 );
+            }
+}
+}
+return len;
 }
 
-ssize_t acpuclk_set_vdd(char *buf) {
+ssize_t acpuclk_set_vdd(char *buf)
+{
+unsigned int cur_volt;
+char count[10];
+int i;
+    int ret = 0;
 
-        int i = 0;
-        unsigned long volt_cur[NUM_FREQS] = {0};
-        int ret = 0;
+if (!buf)
+return -EINVAL;
 
-	if (buf) {
-//		ret = sscanf(buf, "%lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu",
-		ret = sscanf(buf, "%lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu",
-				&volt_cur[0], &volt_cur[1], &volt_cur[2], &volt_cur[3], &volt_cur[4], &volt_cur[5], &volt_cur[6], &volt_cur[7], &volt_cur[8],
-				&volt_cur[9], &volt_cur[10], &volt_cur[11], &volt_cur[12], &volt_cur[13]); //, &volt_cur[14], &volt_cur[15], &volt_cur[16], &volt_cur[17]);
+for (i = 0; i < drv.acpu_freq_tbl[i].speed.khz; i++) {
+        if (drv.acpu_freq_tbl[i].use_for_scaling) {
+            ret = sscanf(buf, "%d", &cur_volt);
 
-		if (ret != NUM_FREQS)
-			return -EINVAL;
+            if (ret != 1)
+                return -EINVAL;
 
-		for(i = 0; i < NUM_FREQS; i++) {
-			if(drv.acpu_freq_tbl[i].speed.khz != 0) {
+            if (cur_volt > MAX_VDD) {
+                cur_volt = MAX_VDD;
+            } else if (cur_volt < MIN_VDD) {
+                cur_volt = MIN_VDD;
+            }
 
-				if (volt_cur[i] < (unsigned long) USERCONTROL_MIN_VDD)
-					volt_cur[i] = (unsigned long) USERCONTROL_MIN_VDD;
-                                if (volt_cur[i] > (unsigned long) USERCONTROL_MAX_VDD)
-                                        volt_cur[i] = (unsigned long) USERCONTROL_MAX_VDD;
+            drv.acpu_freq_tbl[i].vdd_core = cur_volt*1000;
 
-				drv.acpu_freq_tbl[i].vdd_core = volt_cur[i]*1000;
-
-			}
-		}
-	}
-	return ret;
+            ret = sscanf(buf, "%s", count);
+            buf += (strlen(count)+1);
+        }
+}
+return ret;
 }
 #endif
 
-#ifdef CONFIG_CPU_FREQ_MSM
-static struct cpufreq_frequency_table freq_table[NR_CPUS][35];
-
 static void __init cpufreq_table_init(void)
 {
-	int cpu;
+int cpu;
+int freq_cnt = 0;
 
-	for_each_possible_cpu(cpu) {
-		int i, freq_cnt = 0;
-		/* Construct the freq_table tables from acpu_freq_tbl. */
-		for (i = 0; drv.acpu_freq_tbl[i].speed.khz != 0
-				&& freq_cnt < ARRAY_SIZE(*freq_table); i++) {
-			if (drv.acpu_freq_tbl[i].use_for_scaling) {
-				freq_table[cpu][freq_cnt].index = freq_cnt;
-				freq_table[cpu][freq_cnt].frequency
-					= drv.acpu_freq_tbl[i].speed.khz;
-				freq_cnt++;
-			}
-		}
-		/* freq_table not big enough to store all usable freqs. */
-		BUG_ON(drv.acpu_freq_tbl[i].speed.khz != 0);
+for_each_possible_cpu(cpu) {
+int i;
+/* Construct the freq_table tables from acpu_freq_tbl. */
+for (i = 0, freq_cnt = 0; drv.acpu_freq_tbl[i].speed.khz != 0
+&& freq_cnt < ARRAY_SIZE(*freq_table); i++) {
+if (drv.acpu_freq_tbl[i].use_for_scaling) {
+freq_table[cpu][freq_cnt].index = freq_cnt;
+freq_table[cpu][freq_cnt].frequency
+= drv.acpu_freq_tbl[i].speed.khz;
+freq_cnt++;
+}
+}
+/* freq_table not big enough to store all usable freqs. */
+BUG_ON(drv.acpu_freq_tbl[i].speed.khz != 0);
 
-		freq_table[cpu][freq_cnt].index = freq_cnt;
-		freq_table[cpu][freq_cnt].frequency = CPUFREQ_TABLE_END;
+freq_table[cpu][freq_cnt].index = freq_cnt;
+freq_table[cpu][freq_cnt].frequency = CPUFREQ_TABLE_END;
 
-		dev_info(drv.dev, "CPU%d: %d frequencies supported\n",
-			cpu, freq_cnt);
+/* Register table with CPUFreq. */
+cpufreq_frequency_table_get_attr(freq_table[cpu], cpu);
+}
 
-		/* Register table with CPUFreq. */
-		cpufreq_frequency_table_get_attr(freq_table[cpu], cpu);
-	}
+dev_info(drv.dev, "CPU Frequencies Supported: %d\n", freq_cnt);
 }
 #else
 static void __init cpufreq_table_init(void) {}

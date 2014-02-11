@@ -195,7 +195,7 @@ EXPORT_SYMBOL(msm_cpufreq_set_freq_limits);
 static int __cpuinit msm_cpufreq_init(struct cpufreq_policy *policy)
 {
 	int cur_freq;
-	int boot_freq = 1728000;
+	int boot_freq = 1512000;
 	int index;
 	struct cpufreq_frequency_table *table;
 
