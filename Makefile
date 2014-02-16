@@ -246,7 +246,7 @@ CONFIG_SHELL := $(shell if [ -x "$$BASH" ]; then echo $$BASH; \
 
 HOSTCC       = $(CCACHE) gcc
 HOSTCXX      = $(CCACHE) g++
-HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -O3 -fomit-frame-pointer
+HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -Ofast -fomit-frame-pointer
 HOSTCXXFLAGS = -Ofast
 
 # Decide whether to build built-in, modular, or both.
@@ -348,11 +348,19 @@ CHECK		= sparse
 
 CHECKFLAGS     := -D__linux__ -Dlinux -D__STDC__ -Dunix -D__unix__ \
 		  -Wbitwise -Wno-return-void $(CF)
+SNAP_FLAGS	= -fgcse-lm -fgcse-sm -fsched-spec-load -fforce-addr -ffast-math -fsingle-precision-constant
+LIN_FLAGS	= -marm -mcpu=cortex-a9 -mfpu=neon -funsafe-math-optimizations -mtune=cortex-a15
+CFLAGS_MODULO = -fmodulo-sched -fmodulo-sched-allow-regmoves
+
+VENOM_FLAGS	= -Ofast $(SNAP_FLAGS) $(LIN_FLAGS)
+
+MODFLAGS	= -DMODULE $(VENOM_FLAGS)
+
 CFLAGS_MODULE   = -fno-pic
 AFLAGS_MODULE   =
-LDFLAGS_MODULE  =
-CFLAGS_KERNEL	= -mfpu=neon -ftree-vectorize
-AFLAGS_KERNEL	= -mfpu=neon -ftree-vectorize
+LDFLAGS_MODULE  = -T $(srctree)/scripts/module-common.lds
+CFLAGS_KERNEL	= -Ofast
+AFLAGS_KERNEL	= -Ofast
 CFLAGS_GCOV	= -fprofile-arcs -ftest-coverage
 
 
@@ -363,16 +371,16 @@ LINUXINCLUDE    := -I$(srctree)/arch/$(hdr-arch)/include \
                    $(if $(KBUILD_SRC), -I$(srctree)/include) \
                    -include $(srctree)/include/linux/kconfig.h
 
-KBUILD_CPPFLAGS := -D__KERNEL__
+KBUILD_CPPFLAGS := -D__KERNEL__  $(VENOM_FLAGS)
 
 #
-# Barracuda 4.8.3 Optimizations
+# 4.8.3 Optimizations
 #
 CFLAGS_A15 = -mtune=cortex-a15 -mfpu=neon -funsafe-math-optimizations -ftree-vectorize
 CFLAGS_MODULO = -fmodulo-sched -fmodulo-sched-allow-regmoves
 KERNEL_MODS        = $(CFLAGS_A15) $(CFLAGS_MODULO)
 
-KBUILD_CFLAGS := -O3 -funswitch-loops \
+KBUILD_CFLAGS := -Ofast -funswitch-loops \
 		 -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
                  -fno-strict-aliasing -fno-common \
                  -Werror-implicit-function-declaration \
@@ -381,14 +389,14 @@ KBUILD_CFLAGS := -O3 -funswitch-loops \
                  -ftree-vectorize \
                  -mno-unaligned-access \
                  -Wno-sizeof-pointer-memaccess \
-                 $(KERNEL_MODS)
+                  $(VENOM_FLAGS)
 
-KBUILD_AFLAGS_KERNEL :=
-KBUILD_CFLAGS_KERNEL :=
+KBUILD_AFLAGS_KERNEL := $(AFLAGS_KERNEL)
+KBUILD_CFLAGS_KERNEL := $(CFLAGS_KERNEL)
 KBUILD_AFLAGS   := -D__ASSEMBLY__
-KBUILD_AFLAGS_MODULE  := -DMODULE
-KBUILD_CFLAGS_MODULE  := -DMODULE
-KBUILD_LDFLAGS_MODULE := -T $(srctree)/scripts/module-common.lds
+KBUILD_AFLAGS_MODULE  := $(AFLAGS_MODULE)
+KBUILD_CFLAGS_MODULE  := $(CFLAGS_MODULE)
+KBUILD_LDFLAGS_MODULE := $(LDFLAGS_MODULE)
 
 # Read KERNELRELEASE from include/config/kernel.release (if it exists)
 KERNELRELEASE = $(shell cat include/config/kernel.release 2> /dev/null)
@@ -575,7 +583,7 @@ all: vmlinux
 ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS	+= -Os $(call cc-disable-warning,maybe-uninitialized,)
 else
-KBUILD_CFLAGS	+= -O3
+KBUILD_CFLAGS	+= -Ofast
 KBUILD_CFLAGS   += $(call cc-disable-warning,maybe-uninitialized)
 KBUILD_CFLAGS   += $(call cc-disable-warning,array-bounds)
 endif

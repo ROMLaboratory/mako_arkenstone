@@ -1,6 +1,7 @@
 #
 # Makefile for the linux kernel.
 #
+CFLAGS_workqueue.o += -Ofast
 ccflags-y  := -Wno-maybe-uninitialized
 obj-y     = fork.o exec_domain.o panic.o printk.o \
 	    cpu.o exit.o itimer.o time.o softirq.o resource.o \
@@ -10,7 +11,7 @@ obj-y     = fork.o exec_domain.o panic.o printk.o \
 	    kthread.o wait.o kfifo.o sys_ni.o posix-cpu-timers.o mutex.o \
 	    hrtimer.o rwsem.o nsproxy.o srcu.o semaphore.o \
 	    notifier.o ksysfs.o cred.o \
-	    async.o range.o groups.o smpboot.o
+	    async.o range.o groups.o 
 
 ifdef CONFIG_FUNCTION_TRACER
 # Do not trace debug files and internal ftrace files

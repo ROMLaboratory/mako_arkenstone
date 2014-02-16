@@ -145,9 +145,11 @@ static unsigned long round_jiffies_common(unsigned long j, int cpu,
 	/* now that we have rounded, subtract the extra skew again */
 	j -= cpu * 3;
 
-	if (j <= jiffies) /* rounding ate our timeout entirely; */
-		return original;
-	return j;
+	/*
+	 * Make sure j is still in the future. Otherwise return the
+	 * unmodified value.
+	 */
+	return time_is_after_jiffies(j) ? j : original;
 }
 
 /**
@@ -811,8 +813,8 @@ unsigned long apply_slack(struct timer_list *timer, unsigned long expires)
 	mask = expires ^ expires_limit;
 	if (mask == 0)
 		return expires;
-
-	bit = find_last_bit(&mask, BITS_PER_LONG);
+	
+	bit = __fls(mask);
 
 	mask = (1 << bit) - 1;
 
